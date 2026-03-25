@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MM Destinos Mágicos – Consultá tu viaje</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --rojo:#C8102E;
+  --rojo-dark:#9e0c23;
+  --rojo-soft:#f9e5e8;
+  --rojo-mid:#f0b8c0;
+  --negro:#111111;
+  --gris-oscuro:#2a2a2a;
+  --gris:#666;
+  --gris-claro:#e8e8e8;
+  --fondo:#f5f3f0;
+  --blanco:#ffffff;
+  --acento:#2e00d6;
+  --verde:#1a7a40;
+  --verde-soft:#e6f5ed;
+  --dorado:#b8860b;
+  --dorado-soft:#faf3dc;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--fondo);
+  min-height:100vh;
+  color:var(--negro);
+}
+
+/* ══ HEADER BAND ══════════════════════════════ */
+.header-band{
+  background:var(--negro);
+  padding:0 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:52px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.hb-left{display:flex;align-items:center;gap:12px}
+.hb-logo-placeholder{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--rojo);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:700;color:rgba(255,255,255,.6);
+  letter-spacing:.5px;border:1.5px solid rgba(255,255,255,.1);
+}
+.hb-name{font-size:13px;font-weight:600;color:var(--blanco);letter-spacing:.02em}
+.hb-name span{color:var(--rojo);font-weight:300}
+.hb-right{font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.5px;text-transform:uppercase}
+
+/* ══ HERO ══════════════════════════════════════ */
+.hero{
+  background:var(--rojo);
+  padding:52px 24px 44px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  top:-80px;right:-80px;
+  width:340px;height:340px;
+  border-radius:50%;
+  background:rgba(255,255,255,.04);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';
+  position:absolute;
+  bottom:-60px;left:-40px;
+  width:220px;height:220px;
+  border-radius:50%;
+  background:rgba(0,0,0,.08);
+  pointer-events:none;
+}
+.hero-logo{
+  width:88px;height:88px;
+  border-radius:50%;
+  background:var(--blanco);
+  margin:0 auto 22px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 32px rgba(0,0,0,.25);
+  position:relative;z-index:1;
+  font-size:10px;font-weight:700;
+  color:#999;letter-spacing:.5px;
+  flex-direction:column;gap:2px;
+}
+.hero-eyebrow{
+  font-size:10px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:rgba(255,255,255,.55);
+  margin-bottom:10px;position:relative;z-index:1;
+}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,7vw,54px);
+  font-weight:700;
+  color:var(--blanco);
+  line-height:1.05;
+  position:relative;z-index:1;
+  margin-bottom:14px;
+}
+.hero-desc{
+  font-size:13px;color:rgba(255,255,255,.7);
+  max-width:420px;margin:0 auto;line-height:1.7;
+  position:relative;z-index:1;
+}
+.hero-tags{
+  display:flex;flex-wrap:wrap;justify-content:center;
+  gap:8px;margin-top:22px;position:relative;z-index:1;
+}
+.htag{
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.8);
+  font-size:11px;font-weight:500;
+  padding:5px 13px;border-radius:4px;
+  letter-spacing:.3px;
+}
+
+/* ══ PROGRESS ══════════════════════════════════ */
+.progress-wrap{
+  background:var(--negro);
+  padding:16px 24px;
+  position:sticky;top:52px;z-index:99;
+}
+.progress-steps{
+  max-width:600px;margin:0 auto;
+  display:flex;align-items:center;gap:0;
+}
+.ps{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;gap:4px;position:relative;cursor:pointer;
+}
+.ps:not(:last-child)::after{
+  content:'';position:absolute;
+  top:13px;left:calc(50% + 14px);
+  width:calc(100% - 28px);height:1px;
+  background:rgba(255,255,255,.12);
+}
+.ps.done:not(:last-child)::after{background:var(--rojo)}
+.ps-dot{
+  width:26px;height:26px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.15);
+  background:transparent;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:rgba(255,255,255,.3);
+  position:relative;z-index:1;transition:all .2s;
+}
+.ps.on .ps-dot{background:var(--rojo);border-color:var(--rojo);color:#fff}
+.ps.done .ps-dot{background:var(--verde);border-color:var(--verde);color:#fff}
+.ps-lbl{font-size:8px;font-weight:600;letter-spacing:.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.25)}
+.ps.on .ps-lbl{color:rgba(255,255,255,.7)}
+.ps.done .ps-lbl{color:var(--verde)}
+.pbar{height:2px;background:rgba(255,255,255,.08);margin-top:10px;max-width:600px;margin-left:auto;margin-right:auto}
+.pbar-f{height:100%;background:var(--rojo);transition:width .4s;width:20%}
+
+/* ══ CONTENT WRAPPER ═══════════════════════════ */
+.content{max-width:600px;margin:0 auto;padding:32px 16px 80px}
+
+/* ══ SECTION BLOCK ══════════════════════════════ */
+.sec{display:none}.sec.on{display:block}
+
+.sec-header{margin-bottom:28px}
+.sec-number{
+  font-size:10px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--rojo);
+  margin-bottom:6px;
+}
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;font-weight:700;color:var(--negro);
+  line-height:1.1;margin-bottom:6px;
+}
+.sec-sub{font-size:12.5px;color:var(--gris);line-height:1.7}
+
+/* ══ DIVIDER ════════════════════════════════════ */
+.divider{
+  display:flex;align-items:center;gap:12px;
+  margin:24px 0 18px;
+}
+.divider span{
+  font-size:9.5px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:#bbb;white-space:nowrap;
+}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--gris-claro)}
+
+/* ══ FIELDS ═════════════════════════════════════ */
+.fld{margin-bottom:16px}
+.fld>label{
+  display:block;font-size:11px;font-weight:600;
+  color:var(--gris-oscuro);margin-bottom:7px;letter-spacing:.3px;
+}
+.req{color:var(--rojo)}.opt{font-weight:400;color:#aaa;font-size:10px}
+input[type=text],input[type=tel],input[type=email],
+input[type=number],input[type=date],select,textarea{
+  width:100%;padding:11px 14px;
+  border-radius:6px;
+  border:1.5px solid var(--gris-claro);
+  font-family:'Inter',sans-serif;font-size:13.5px;
+  color:var(--negro);background:var(--blanco);
+  outline:none;transition:border-color .15s,box-shadow .15s;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--rojo);
+  box-shadow:0 0 0 3px rgba(200,16,46,.07);
+}
+select{
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23aaa' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+}
+textarea{resize:vertical;min-height:80px;line-height:1.6}
+.ferr{font-size:11px;color:var(--rojo);margin-top:5px;display:none;font-weight:500}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+
+/* ══ OPTION TILES (reemplaza radio cards) ═══════ */
+.tiles{display:grid;gap:8px}
+.tiles.t2{grid-template-columns:1fr 1fr}
+.tiles.t3{grid-template-columns:1fr 1fr 1fr}
+.tile{cursor:pointer;position:relative}
+.tile input{position:absolute;opacity:0;pointer-events:none}
+.tile-inner{
+  padding:13px 14px;
+  border-radius:6px;
+  border:1.5px solid var(--gris-claro);
+  background:var(--blanco);
+  transition:all .14s;
+  display:flex;align-items:flex-start;gap:10px;
+}
+.tile input:checked~.tile-inner{
+  border-color:var(--rojo);
+  background:var(--rojo-soft);
+}
+.tile.verde input:checked~.tile-inner{border-color:var(--verde);background:var(--verde-soft)}
+.tile.dorado input:checked~.tile-inner{border-color:var(--dorado);background:var(--dorado-soft)}
+.tile.azul input:checked~.tile-inner{border-color:var(--acento);background:#f0eeff}
+.tile-ico{
+  width:32px;height:32px;border-radius:6px;
+  background:var(--fondo);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.tile input:checked~.tile-inner .tile-ico{background:rgba(200,16,46,.12)}
+.tile.verde input:checked~.tile-inner .tile-ico{background:rgba(26,122,64,.12)}
+.tile.dorado input:checked~.tile-inner .tile-ico{background:rgba(184,134,11,.12)}
+.tile.azul input:checked~.tile-inner .tile-ico{background:rgba(46,0,214,.1)}
+.tile-txt{}
+.tile-name{font-size:12.5px;font-weight:600;color:var(--negro);line-height:1.3}
+.tile input:checked~.tile-inner .tile-name{color:var(--rojo)}
+.tile.verde input:checked~.tile-inner .tile-name{color:var(--verde)}
+.tile.dorado input:checked~.tile-inner .tile-name{color:var(--dorado)}
+.tile.azul input:checked~.tile-inner .tile-name{color:var(--acento)}
+.tile-desc{font-size:10.5px;color:var(--gris);margin-top:2px;line-height:1.4}
+
+/* ══ TAGS (checkbox pills) ══════════════════════ */
+.tags{display:flex;flex-wrap:wrap;gap:7px}
+.tag{cursor:pointer}
+.tag input{position:absolute;opacity:0;pointer-events:none}
+.tag span{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 14px;border-radius:4px;
+  border:1.5px solid var(--gris-claro);
+  font-size:12px;font-weight:500;color:var(--gris);
+  background:var(--blanco);transition:all .13s;
+}
+.tag input:checked+span{
+  background:var(--negro);color:var(--blanco);
+  border-color:var(--negro);
+}
+.tag.rojo input:checked+span{background:var(--rojo);border-color:var(--rojo);color:#fff}
+.tag.verde input:checked+span{background:var(--verde);border-color:var(--verde);color:#fff}
+
+/* ══ YES/NO TOGGLE ══════════════════════════════ */
+.toggle-row{display:flex;gap:8px}
+.toggle-row label{flex:1;cursor:pointer}
+.toggle-row label input{position:absolute;opacity:0;pointer-events:none}
+.toggle-row label span{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:11px 8px;border-radius:6px;
+  border:1.5px solid var(--gris-claro);
+  font-size:12.5px;font-weight:600;color:var(--gris);
+  background:var(--blanco);transition:all .14s;
+}
+.toggle-row label.si input:checked+span{border-color:var(--verde);background:var(--verde-soft);color:var(--verde)}
+.toggle-row label.no input:checked+span{border-color:var(--rojo);background:var(--rojo-soft);color:var(--rojo)}
+.toggle-row label.tal input:checked+span{border-color:var(--dorado);background:var(--dorado-soft);color:var(--dorado)}
+
+/* ══ COUNTERS ═══════════════════════════════════ */
+.counter-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.counter{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;border-radius:6px;
+  border:1.5px solid var(--gris-claro);background:var(--blanco);
+}
+.counter-info .cn{font-size:13px;font-weight:600;color:var(--negro)}
+.counter-info .cs{font-size:10.5px;color:var(--gris)}
+.counter-ctrl{display:flex;align-items:center;gap:8px}
+.cbtn{
+  width:28px;height:28px;border-radius:50%;
+  border:1.5px solid var(--gris-claro);background:var(--blanco);
+  font-size:17px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gris);transition:all .12s;line-height:1;
+}
+.cbtn:hover{border-color:var(--rojo);color:var(--rojo);background:var(--rojo-soft)}
+.cnum{font-size:18px;font-weight:700;color:var(--negro);min-width:20px;text-align:center;font-family:'Cormorant Garamond',serif}
+
+/* ══ EDAD ROWS ══════════════════════════════════ */
+.erow{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.erow .elbl{font-size:12px;color:var(--gris);min-width:72px;font-weight:500}
+.erow input{flex:1;padding:8px 12px}
+
+/* ══ INFOBOX ════════════════════════════════════ */
+.infobox{
+  border-radius:6px;padding:12px 15px;
+  font-size:11.5px;line-height:1.65;margin-top:8px;
+}
+.infobox.rojo{background:var(--rojo-soft);border-left:3px solid var(--rojo);color:#7a1020}
+.infobox.negro{background:#f0f0f0;border-left:3px solid var(--negro);color:var(--gris-oscuro)}
+.infobox.verde{background:var(--verde-soft);border-left:3px solid var(--verde);color:#104a28}
+.ib-title{font-weight:700;margin-bottom:3px;font-size:11px;letter-spacing:.3px;text-transform:uppercase}
+
+/* ══ NAV BUTTONS ════════════════════════════════ */
+.nav{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:32px;padding-top:20px;
+  border-top:1px solid var(--gris-claro);
+}
+.btn-back{
+  padding:10px 20px;border-radius:6px;
+  border:1.5px solid var(--gris-claro);
+  background:var(--blanco);
+  font-family:'Inter',sans-serif;font-size:13px;
+  font-weight:600;color:var(--gris);cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+  transition:all .13s;
+}
+.btn-back:hover{border-color:#aaa;color:var(--negro)}
+.btn-next{
+  padding:12px 28px;border-radius:6px;
+  border:none;background:var(--negro);
+  font-family:'Inter',sans-serif;font-size:13.5px;
+  font-weight:600;color:var(--blanco);cursor:pointer;
+  display:flex;align-items:center;gap:7px;
+  transition:all .13s;letter-spacing:.2px;
+}
+.btn-next:hover{background:var(--rojo)}
+.btn-send{
+  padding:13px 32px;border-radius:6px;
+  border:none;background:var(--rojo);
+  font-family:'Inter',sans-serif;font-size:14px;
+  font-weight:700;color:var(--blanco);cursor:pointer;
+  display:flex;align-items:center;gap:8px;
+  transition:all .13s;letter-spacing:.2px;
+}
+.btn-send:hover{background:var(--rojo-dark);transform:translateY(-1px)}
+
+/* ══ SUCCESS SCREEN ════════════════════════════ */
+#ok-screen{
+  display:none;
+  background:var(--blanco);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 24px rgba(0,0,0,.08);
+}
+.ok-top{
+  background:var(--negro);
+  padding:40px 32px;
+  text-align:center;
+}
+.ok-logo{
+  width:72px;height:72px;border-radius:50%;
+  background:var(--rojo);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 18px;
+  font-size:9px;font-weight:700;color:rgba(255,255,255,.5);
+  letter-spacing:.5px;
+}
+.ok-titulo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;font-weight:700;color:var(--blanco);
+  margin-bottom:6px;
+}
+.ok-sub{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6}
+.ok-body{padding:28px 28px 32px}
+.ok-resumen-titulo{
+  font-size:10px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--rojo);
+  margin-bottom:14px;
+}
+#ok-resumen{margin-bottom:22px}
+#ok-resumen .or{
+  display:flex;align-items:baseline;gap:8px;
+  padding:9px 0;border-bottom:1px solid var(--gris-claro);
+  font-size:13px;color:var(--negro);
+}
+#ok-resumen .or:last-child{border-bottom:none}
+#ok-resumen .or strong{
+  font-size:10px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:var(--gris);
+  min-width:80px;flex-shrink:0;
+}
+.ok-pasos{
+  background:var(--fondo);border-radius:6px;
+  padding:16px 18px;margin-bottom:20px;
+}
+.ok-pasos-t{
+  font-size:10px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--negro);margin-bottom:10px;
+}
+.ok-pasos .op{
+  font-size:12.5px;color:var(--gris);
+  line-height:2.1;display:flex;align-items:center;gap:8px;
+}
+.op-dot{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--rojo);color:#fff;
+  font-size:9px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.btn-wa{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  width:100%;padding:14px;border-radius:6px;
+  background:#25D366;color:#fff;
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:700;
+  text-decoration:none;transition:all .13s;
+  box-shadow:0 4px 16px rgba(37,211,102,.25);
+  letter-spacing:.2px;
+}
+.btn-wa:hover{background:#1da855;transform:translateY(-1px)}
+
+/* ══ FOOTER ════════════════════════════════════ */
+.footer{
+  background:var(--negro);
+  text-align:center;
+  padding:22px 24px;
+  font-size:11px;color:rgba(255,255,255,.28);
+  letter-spacing:.3px;
+}
+.footer a{color:rgba(255,255,255,.4);text-decoration:none}
+
+@media(max-width:500px){
+  .g2,.g3,.tiles.t2,.tiles.t3,.counter-row{grid-template-columns:1fr}
+  .content{padding:24px 12px 60px}
+  .ok-body{padding:20px 16px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────── -->
+<header class="header-band">
+  <div class="hb-left">
+    <div class="hb-logo-placeholder">LOGO</div>
+    <div class="hb-name">MM <span>Destinos Mágicos</span></div>
+  </div>
+  <div class="hb-right">Consulta gratuita</div>
+</header>
+
+<!-- ── HERO ────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-logo">[LOGO]</div>
+  <div class="hero-eyebrow">Agente certificada Disney &amp; Universal</div>
+  <h1>Cotizá tu<br>viaje soñado</h1>
+  <p class="hero-desc">Completá el formulario y recibís una cotización personalizada sin costo. Atendemos después de las 16hs.</p>
+  <div class="hero-tags">
+    <span class="htag">Sin costo</span>
+    <span class="htag">Disney &amp; Universal</span>
+    <span class="htag">Cuotas mensuales</span>
+    <span class="htag">Tarjeta de crédito y débito</span>
+  </div>
+</section>
+
+<!-- ── PROGRESS ────────────────────────────── -->
+<div class="progress-wrap">
+  <div class="progress-steps" id="steps-bar">
+    <div class="ps on" id="stp1"><div class="ps-dot">1</div><div class="ps-lbl">Destino</div></div>
+    <div class="ps" id="stp2"><div class="ps-dot">2</div><div class="ps-lbl">Viajeros</div></div>
+    <div class="ps" id="stp3"><div class="ps-dot">3</div><div class="ps-lbl">Alojamiento</div></div>
+    <div class="ps" id="stp4"><div class="ps-dot">4</div><div class="ps-lbl">Preferencias</div></div>
+    <div class="ps" id="stp5"><div class="ps-dot">5</div><div class="ps-lbl">Contacto</div></div>
+  </div>
+  <div class="pbar"><div class="pbar-f" id="pfill"></div></div>
+</div>
+
+<!-- ── CONTENT ─────────────────────────────── -->
+<div class="content">
+
+  <!-- ═══════════════════════════════
+       PASO 1 · DESTINO Y FECHAS
+  ═══════════════════════════════ -->
+  <div class="sec on" id="s1">
+    <div class="sec-header">
+      <div class="sec-number">Paso 01 / 05</div>
+      <div class="sec-title">Destino y fechas</div>
+      <div class="sec-sub">¿A dónde soñás con ir? Podés elegir más de uno.</div>
+    </div>
+
+    <div class="fld">
+      <label>¿Cuál es tu destino? <span class="req">*</span></label>
+      <div class="tags">
+        <label class="tag rojo"><input type="checkbox" name="dest" value="Disney / Orlando"><span>Disney / Orlando</span></label>
+        <label class="tag rojo"><input type="checkbox" name="dest" value="Universal Studios"><span>Universal Studios</span></label>
+        <label class="tag"><input type="checkbox" name="dest" value="Miami"><span>Miami</span></label>
+        <label class="tag"><input type="checkbox" name="dest" value="Cancún"><span>Cancún</span></label>
+        <label class="tag"><input type="checkbox" name="dest" value="Europa"><span>Europa</span></label>
+        <label class="tag"><input type="checkbox" name="dest" value="Otro destino"><span>Otro</span></label>
+      </div>
+      <div class="ferr" id="e-dest">Seleccioná al menos un destino.</div>
+    </div>
+
+    <div class="divider"><span>Fechas</span></div>
+
+    <div class="g2">
+      <div class="fld">
+        <label>Mes de viaje <span class="req">*</span></label>
+        <select id="sel-mes">
+          <option value="">Seleccioná...</option>
+          <option value="Enero">Enero — temporada baja 🟢</option>
+          <option value="Febrero">Febrero — temporada baja 🟢</option>
+          <option value="Marzo">Marzo — temporada alta 🔴</option>
+          <option value="Abril">Abril — temporada media 🟡</option>
+          <option value="Mayo">Mayo — temporada media 🟡</option>
+          <option value="Junio">Junio — temporada media 🟡</option>
+          <option value="Julio">Julio — temporada alta 🔴</option>
+          <option value="Agosto">Agosto — temporada alta 🔴</option>
+          <option value="Septiembre">Septiembre — temporada media 🟡</option>
+          <option value="Octubre">Octubre — temporada media 🟡</option>
+          <option value="Noviembre">Noviembre — temporada alta 🔴</option>
+          <option value="Diciembre">Diciembre — temporada alta 🔴</option>
+          <option value="Flexible">Aún no lo sé / soy flexible</option>
+        </select>
+        <div class="ferr" id="e-mes">Seleccioná un mes.</div>
+      </div>
+      <div class="fld">
+        <label>Días totales <span class="req">*</span></label>
+        <select id="dias-total">
+          <option value="">Cantidad de días</option>
+          <option>5 días</option><option>7 días</option>
+          <option>10 días</option><option>12 días</option>
+          <option>14 días</option><option>+15 días</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="fld">
+        <label>Check-in <span class="opt">(opcional)</span></label>
+        <input type="date" id="fecha-in">
+      </div>
+      <div class="fld">
+        <label>Check-out <span class="opt">(opcional)</span></label>
+        <input type="date" id="fecha-out">
+      </div>
+    </div>
+
+    <div class="fld">
+      <label>Presupuesto estimado <span class="opt">(opcional)</span></label>
+      <select id="sel-presup">
+        <option value="">No sé / quiero asesoramiento</option>
+        <option>Hasta 1.500 USD</option>
+        <option>1.500 – 3.000 USD</option>
+        <option>3.000 – 6.000 USD</option>
+        <option>6.000 – 10.000 USD</option>
+        <option>Más de 10.000 USD</option>
+      </select>
+    </div>
+
+    <div class="fld">
+      <label>Flexibilidad de fechas <span class="req">*</span></label>
+      <div class="tiles t2">
+        <label class="tile verde">
+          <input type="radio" name="flex" value="Sí, puedo mover fechas">
+          <div class="tile-inner">
+            <div class="tile-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+            <div class="tile-txt"><div class="tile-name">Soy flexible</div><div class="tile-desc">Puedo ajustar fechas</div></div>
+          </div>
+        </label>
+        <label class="tile">
+          <input type="radio" name="flex" value="Fechas fijas">
+          <div class="tile-inner">
+            <div class="tile-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="tile-txt"><div class="tile-name">Fechas fijas</div><div class="tile-desc">No puedo mover</div></div>
+          </div>
+        </label>
+      </div>
+      <div class="ferr" id="e-flex">Indicá tu flexibilidad.</div>
+    </div>
+
+    <div class="nav">
+      <div></div>
+      <button class="btn-next" id="b1" type="button">Continuar <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       PASO 2 · VIAJEROS
+  ═══════════════════════════════ -->
+  <div class="sec" id="s2">
+    <div class="sec-header">
+      <div class="sec-number">Paso 02 / 05</div>
+      <div class="sec-title">Los viajeros</div>
+      <div class="sec-sub">Datos del grupo para preparar la mejor cotización.</div>
+    </div>
+
+    <div class="fld">
+      <label>Cantidad de viajeros <span class="req">*</span></label>
+      <div class="counter-row">
+        <div class="counter">
+          <div class="counter-info"><div class="cn">Adultos</div><div class="cs">18 años o más</div></div>
+          <div class="counter-ctrl"><button class="cbtn" id="adu-m" type="button">−</button><span class="cnum" id="n-adu">2</span><button class="cbtn" id="adu-p" type="button">+</button></div>
+        </div>
+        <div class="counter">
+          <div class="counter-info"><div class="cn">Menores</div><div class="cs">0 a 17 años</div></div>
+          <div class="counter-ctrl"><button class="cbtn" id="men-m" type="button">−</button><span class="cnum" id="n-men">0</span><button class="cbtn" id="men-p" type="button">+</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="wrap-edades" style="display:none">
+      <div class="fld">
+        <label>Edad de los menores <span class="req">*</span></label>
+        <div class="infobox negro"><div class="ib-title">¿Por qué importa?</div>Menores de 3 años entran gratis a Disney, de 3 a 9 pagan precio junior, de 10+ como adulto.</div>
+        <div id="cont-edades" style="margin-top:10px"></div>
+      </div>
+    </div>
+
+    <div class="fld">
+      <label>¿Cómo es el grupo? <span class="req">*</span></label>
+      <div class="tiles t2">
+        <label class="tile"><input type="radio" name="grupo" value="Familia con niños pequeños (−7)"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">Niños chicos</div><div class="tile-desc">Menores de 7 años</div></div></div></label>
+        <label class="tile"><input type="radio" name="grupo" value="Familia con niños medianos (7-12)"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">Niños medianos</div><div class="tile-desc">Entre 7 y 12 años</div></div></div></label>
+        <label class="tile"><input type="radio" name="grupo" value="Familia con adolescentes"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M5.5 21a8.38 8.38 0 0 1 13 0" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">Adolescentes</div><div class="tile-desc">13 años o más</div></div></div></label>
+        <label class="tile azul"><input type="radio" name="grupo" value="Pareja sin niños"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l8.84 8.84 8.84-8.84a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">Pareja</div><div class="tile-desc">Solo adultos</div></div></div></label>
+        <label class="tile azul"><input type="radio" name="grupo" value="Grupo de amigos"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2"/></svg></div><div class="tile-txt"><div class="tile-name">Grupo de amigos</div><div class="tile-desc">Solo adultos</div></div></div></label>
+        <label class="tile verde"><input type="radio" name="grupo" value="Viaje multigeneracional"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M5 21l2-6h10l2 6" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">Multigeneracional</div><div class="tile-desc">Con abuelos</div></div></div></label>
+      </div>
+      <div class="ferr" id="e-grupo">Seleccioná el tipo de grupo.</div>
+    </div>
+
+    <div class="fld">
+      <label>¿Primera vez en Orlando? <span class="req">*</span></label>
+      <div class="toggle-row">
+        <label class="si"><input type="radio" name="primera" value="Sí, primera vez"><span>Sí, primera vez</span></label>
+        <label class="no"><input type="radio" name="primera" value="No, ya fuimos"><span>No, ya fuimos</span></label>
+      </div>
+      <div class="ferr" id="e-primera">Por favor respondé.</div>
+    </div>
+
+    <div class="fld">
+      <label>Nivel de experiencia Disney <span class="req">*</span></label>
+      <div class="tiles t3">
+        <label class="tile verde"><input type="radio" name="experiencia" value="Principiante"><div class="tile-inner"><div class="tile-txt"><div class="tile-name">Principiante</div><div class="tile-desc">1ra o 2da vez</div></div></div></label>
+        <label class="tile azul"><input type="radio" name="experiencia" value="Intermedio"><div class="tile-inner"><div class="tile-txt"><div class="tile-name">Intermedio</div><div class="tile-desc">Fui 2 o 3 veces</div></div></div></label>
+        <label class="tile dorado"><input type="radio" name="experiencia" value="Experto"><div class="tile-inner"><div class="tile-txt"><div class="tile-name">Experto</div><div class="tile-desc">Veterano Disney</div></div></div></label>
+      </div>
+      <div class="ferr" id="e-exp">Seleccioná tu nivel.</div>
+    </div>
+
+    <div class="divider"><span>Documentación</span></div>
+    <div class="g2">
+      <div class="fld">
+        <label>Pasaporte vigente <span class="req">*</span></label>
+        <div class="toggle-row">
+          <label class="si"><input type="radio" name="pas" value="Sí, todos"><span>Sí</span></label>
+          <label class="no"><input type="radio" name="pas" value="No / A tramitar"><span>No</span></label>
+        </div>
+        <div class="ferr" id="e-pas">Indicá si tienen pasaporte.</div>
+      </div>
+      <div class="fld">
+        <label>Visa americana <span class="req">*</span></label>
+        <div class="toggle-row">
+          <label class="si"><input type="radio" name="visa" value="Sí"><span>Sí</span></label>
+          <label class="no"><input type="radio" name="visa" value="No"><span>No</span></label>
+          <label class="tal"><input type="radio" name="visa" value="En trámite"><span>Trámite</span></label>
+        </div>
+        <div class="ferr" id="e-visa">Indicá el estado de la visa.</div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" id="b2b" type="button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Atrás</button>
+      <button class="btn-next" id="b2" type="button">Continuar <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       PASO 3 · ALOJAMIENTO
+  ═══════════════════════════════ -->
+  <div class="sec" id="s3">
+    <div class="sec-header">
+      <div class="sec-number">Paso 03 / 05</div>
+      <div class="sec-title">Alojamiento</div>
+      <div class="sec-sub">La elección del hotel define gran parte de la experiencia.</div>
+    </div>
+
+    <div class="fld">
+      <label>Hotel en Disney <span class="req">*</span></label>
+      <div class="tiles">
+        <label class="tile verde"><input type="radio" name="hotel-dis" value="Hotel dentro de Disney (on-site)"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" fill="none"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">Dentro de Disney (on-site)</div><div class="tile-desc">Transporte gratis + ingreso temprano a los parques</div></div></div></label>
+        <label class="tile azul"><input type="radio" name="hotel-dis" value="Hotel fuera de Disney (off-site)"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile-txt"><div class="tile-name">Fuera de Disney (off-site)</div><div class="tile-desc">Más económico, se necesita auto o Uber</div></div></div></label>
+        <label class="tile"><input type="radio" name="hotel-dis" value="No vamos a Disney"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile-txt"><div class="tile-name">No vamos a Disney</div></div></div></label>
+      </div>
+      <div class="ferr" id="e-hotel-dis">Seleccioná una opción.</div>
+    </div>
+
+    <div class="fld">
+      <label>Hotel en Universal <span class="req">*</span></label>
+      <div class="tiles">
+        <label class="tile verde"><input type="radio" name="hotel-uni" value="Hotel dentro de Universal (on-site)"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M2 12h20" stroke="currentColor" stroke-width="2"/></svg></div><div class="tile-txt"><div class="tile-name">Dentro de Universal (on-site)</div><div class="tile-desc">Ingreso temprano + acceso directo a Epic Universe</div></div></div></label>
+        <label class="tile azul"><input type="radio" name="hotel-uni" value="Hotel fuera de Universal (off-site)"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">Fuera de Universal (off-site)</div><div class="tile-desc">Opciones más económicas</div></div></div></label>
+        <label class="tile"><input type="radio" name="hotel-uni" value="No vamos a Universal"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile-txt"><div class="tile-name">No vamos a Universal</div></div></div></label>
+      </div>
+      <div class="ferr" id="e-hotel-uni">Seleccioná una opción.</div>
+    </div>
+
+    <div class="fld">
+      <label>Categoría de hotel <span class="req">*</span></label>
+      <div class="tiles t3">
+        <label class="tile verde"><input type="radio" name="cat-hotel" value="Económico / Value"><div class="tile-inner"><div class="tile-txt"><div class="tile-name">Económico</div><div class="tile-desc">Precio cuidado</div></div></div></label>
+        <label class="tile azul"><input type="radio" name="cat-hotel" value="Moderado"><div class="tile-inner"><div class="tile-txt"><div class="tile-name">Moderado</div><div class="tile-desc">Balance ideal</div></div></div></label>
+        <label class="tile dorado"><input type="radio" name="cat-hotel" value="Premium / Deluxe"><div class="tile-inner"><div class="tile-txt"><div class="tile-name">Premium</div><div class="tile-desc">Máximo confort</div></div></div></label>
+      </div>
+      <div class="ferr" id="e-cat-hotel">Seleccioná la categoría.</div>
+    </div>
+
+    <div class="divider"><span>Crucero Disney</span></div>
+
+    <div class="fld">
+      <label>¿Te interesa incluir un crucero Disney? <span class="req">*</span></label>
+      <div class="tiles">
+        <label class="tile verde"><input type="radio" name="crucero" value="Sí, quiero cotizarlo"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M2 20h20M5 20V8l7-5 7 5v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile-txt"><div class="tile-name">Sí, quiero cotizarlo</div><div class="tile-desc">Sale desde Port Canaveral, a 45 min de los parques</div></div></div></label>
+        <label class="tile"><input type="radio" name="crucero" value="No por esta vez"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile-txt"><div class="tile-name">No por esta vez</div></div></div></label>
+        <label class="tile azul"><input type="radio" name="crucero" value="Tal vez, quiero más info"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M9 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile-txt"><div class="tile-name">Tal vez, quiero info</div><div class="tile-desc">Lo evaluamos juntos</div></div></div></label>
+      </div>
+      <div class="ferr" id="e-crucero">Por favor respondé.</div>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" id="b3b" type="button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Atrás</button>
+      <button class="btn-next" id="b3" type="button">Continuar <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       PASO 4 · PREFERENCIAS
+  ═══════════════════════════════ -->
+  <div class="sec" id="s4">
+    <div class="sec-header">
+      <div class="sec-number">Paso 04 / 05</div>
+      <div class="sec-title">Preferencias</div>
+      <div class="sec-sub">Cuanto más sabemos, mejor personalizamos tu cotización.</div>
+    </div>
+
+    <div class="fld">
+      <label>Actividades que te interesan <span class="opt">(varios)</span></label>
+      <div class="tags">
+        <label class="tag"><input type="checkbox" name="actividades" value="Parques temáticos"><span>Parques temáticos</span></label>
+        <label class="tag"><input type="checkbox" name="actividades" value="Compras Disney Springs"><span>Compras</span></label>
+        <label class="tag"><input type="checkbox" name="actividades" value="Restaurantes temáticos"><span>Restaurantes</span></label>
+        <label class="tag"><input type="checkbox" name="actividades" value="Espectáculos y shows"><span>Espectáculos</span></label>
+        <label class="tag"><input type="checkbox" name="actividades" value="Cena con personajes"><span>Cena con personajes</span></label>
+        <label class="tag"><input type="checkbox" name="actividades" value="Bibbidi Bobbidi Boutique"><span>Bibbidi Bobbidi</span></label>
+      </div>
+    </div>
+
+    <div class="fld">
+      <label>Transporte preferido <span class="req">*</span></label>
+      <div class="tiles t2">
+        <label class="tile"><input type="radio" name="transporte" value="Avión desde Argentina"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">Avión</div><div class="tile-desc">Vuelo desde ARG</div></div></div></label>
+        <label class="tile azul"><input type="radio" name="transporte" value="Auto rentado / Uber"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-1M5 17a2 2 0 1 0 4 0M15 17a2 2 0 1 0 4 0" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">Auto / Uber</div><div class="tile-desc">Más flexibilidad</div></div></div></label>
+        <label class="tile verde"><input type="radio" name="transporte" value="Transporte incluido Disney"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="1" y="3" width="15" height="13" rx="2" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">Bus / Skyliner</div><div class="tile-desc">Incluido on-site</div></div></div></label>
+        <label class="tile dorado"><input type="radio" name="transporte" value="Tren / Transporte local"><div class="tile-inner"><div class="tile-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M4 10h16" stroke="currentColor" stroke-width="2"/></svg></div><div class="tile-txt"><div class="tile-name">Tren / Local</div><div class="tile-desc">Aeropuerto + apps</div></div></div></label>
+      </div>
+      <div class="ferr" id="e-transporte">Seleccioná el transporte.</div>
+    </div>
+
+    <div class="fld">
+      <label>Importancia de la gastronomía <span class="req">*</span></label>
+      <div class="tiles t3">
+        <label class="tile dorado"><input type="radio" name="comida" value="Muy importante"><div class="tile-inner"><div class="tile-txt"><div class="tile-name">Muy importante</div><div class="tile-desc">Los mejores restaurantes</div></div></div></label>
+        <label class="tile azul"><input type="radio" name="comida" value="Importante"><div class="tile-inner"><div class="tile-txt"><div class="tile-name">Importante</div><div class="tile-desc">Buen equilibrio</div></div></div></label>
+        <label class="tile"><input type="radio" name="comida" value="Poco importante"><div class="tile-inner"><div class="tile-txt"><div class="tile-name">Poco importante</div><div class="tile-desc">Prefiero ahorrar</div></div></div></label>
+      </div>
+      <div class="ferr" id="e-comida">Seleccioná una opción.</div>
+    </div>
+
+    <div class="fld">
+      <label>Extras que te interesan <span class="opt">(varios)</span></label>
+      <div class="tags">
+        <label class="tag rojo"><input type="checkbox" name="extras" value="Plan de comidas Disney"><span>Plan de comidas</span></label>
+        <label class="tag rojo"><input type="checkbox" name="extras" value="Lightning Lane / Genie+"><span>Lightning Lane</span></label>
+        <label class="tag"><input type="checkbox" name="extras" value="Traslado aeropuerto"><span>Traslado aeropuerto</span></label>
+        <label class="tag"><input type="checkbox" name="extras" value="Seguro de viaje"><span>Seguro de viaje</span></label>
+        <label class="tag"><input type="checkbox" name="extras" value="Fotografía Disney"><span>Foto Disney</span></label>
+      </div>
+    </div>
+
+    <div class="fld">
+      <label>¿Querés recibir info adicional sobre el viaje? <span class="req">*</span></label>
+      <div class="toggle-row">
+        <label class="si"><input type="radio" name="info-adicional" value="Sí, toda la info"><span>Sí</span></label>
+        <label class="no"><input type="radio" name="info-adicional" value="No, solo la cotización"><span>Solo cotización</span></label>
+      </div>
+      <div class="ferr" id="e-infoadicional">Por favor respondé.</div>
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" id="b4b" type="button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Atrás</button>
+      <button class="btn-next" id="b4" type="button">Continuar <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       PASO 5 · CONTACTO
+  ═══════════════════════════════ -->
+  <div class="sec" id="s5">
+    <div class="sec-header">
+      <div class="sec-number">Paso 05 / 05</div>
+      <div class="sec-title">Tus datos</div>
+      <div class="sec-sub">Último paso. Con esto te preparamos la cotización.</div>
+    </div>
+
+    <div class="g2">
+      <div class="fld">
+        <label>Nombre <span class="req">*</span></label>
+        <input type="text" id="inp-nom" placeholder="¿Cómo te llamás?">
+        <div class="ferr" id="e-nom">Ingresá tu nombre.</div>
+      </div>
+      <div class="fld">
+        <label>WhatsApp <span class="req">*</span></label>
+        <input type="tel" id="inp-wa" placeholder="+54 9 223...">
+        <div class="ferr" id="e-wa">Ingresá tu WhatsApp.</div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="fld">
+        <label>Email <span class="opt">(opcional)</span></label>
+        <input type="email" id="inp-email" placeholder="tu@email.com">
+      </div>
+      <div class="fld">
+        <label>País</label>
+        <select id="inp-pais">
+          <option value="Argentina">Argentina 🇦🇷</option>
+          <option>Uruguay 🇺🇾</option><option>Chile 🇨🇱</option>
+          <option>Brasil 🇧🇷</option><option>Paraguay 🇵🇾</option>
+          <option>Otro</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fld">
+      <label>Comunicación preferida <span class="req">*</span></label>
+      <div class="tiles t3">
+        <label class="tile verde"><input type="radio" name="comunicacion" value="WhatsApp"><div class="tile-inner"><div class="tile-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">WhatsApp</div></div></div></label>
+        <label class="tile azul"><input type="radio" name="comunicacion" value="Email"><div class="tile-inner"><div class="tile-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" fill="none"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" fill="none"/></svg></div><div class="tile-txt"><div class="tile-name">Email</div></div></div></label>
+        <label class="tile"><input type="radio" name="comunicacion" value="Instagram"><div class="tile-inner"><div class="tile-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></div><div class="tile-txt"><div class="tile-name">Instagram</div></div></div></label>
+      </div>
+      <div class="ferr" id="e-comunicacion">Seleccioná tu forma de contacto.</div>
+    </div>
+
+    <div class="fld">
+      <label>¿Cómo nos encontraste? <span class="opt">(opcional)</span></label>
+      <select id="sel-como">
+        <option value="">Seleccioná...</option>
+        <option>Instagram @mm_destinosmagicos</option>
+        <option>Me recomendó alguien</option>
+        <option>Google</option>
+        <option>Facebook</option>
+        <option>Ya trabajé con Mariela antes</option>
+      </select>
+    </div>
+
+    <div class="fld">
+      <label>Comentarios adicionales <span class="opt">(opcional)</span></label>
+      <textarea id="inp-com" placeholder="Cumpleaños, necesidades especiales, celebraciones, dudas..."></textarea>
+    </div>
+
+    <div class="infobox rojo" style="margin-bottom:8px">
+      <div class="ib-title">Tu información está segura</div>
+      Tus datos se usan únicamente para preparar tu cotización. Nunca los compartimos con terceros.
+    </div>
+
+    <div class="nav">
+      <button class="btn-back" id="b5b" type="button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Atrás</button>
+      <button class="btn-send" id="benv" type="button">Enviar consulta <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       SUCCESS SCREEN
+  ═══════════════════════════════ -->
+  <div id="ok-screen">
+    <div class="ok-top">
+      <div class="ok-logo">[LOGO]</div>
+      <div class="ok-titulo">¡Consulta recibida!</div>
+      <div class="ok-sub" id="ok-nombre-sub">Ya estoy preparando tu cotización personalizada.</div>
+    </div>
+    <div class="ok-body">
+      <div class="ok-resumen-titulo">Resumen de tu consulta</div>
+      <div id="ok-resumen"></div>
+
+      <div class="ok-pasos">
+        <div class="ok-pasos-t">¿Qué pasa ahora?</div>
+        <div class="op"><div class="op-dot">1</div>Recibí tu consulta al instante</div>
+        <div class="op"><div class="op-dot">2</div>Armo tu cotización personalizada</div>
+        <div class="op"><div class="op-dot">3</div>Te contacto por WhatsApp a la brevedad</div>
+        <div style="font-size:11px;color:#aaa;margin-top:10px;padding-left:28px">⏰ Atención después de las 16hs · @mm_destinosmagicos</div>
+      </div>
+
+      <a id="wa-link" class="btn-wa" href="#" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.126 1.532 5.86L.078 23.54a.5.5 0 0 0 .613.613l5.68-1.454A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.896 0-3.67-.501-5.207-1.378l-.374-.217-3.871.991.991-3.872-.217-.374A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Confirmar por WhatsApp a Mariela
+      </a>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- ── FOOTER ───────────────────────────────── -->
+<footer class="footer">
+  <p>© 2025 MM Destinos Mágicos &nbsp;·&nbsp; <a href="https://instagram.com/mm_destinosmagicos" target="_blank">@mm_destinosmagicos</a> &nbsp;·&nbsp; +54 9 2235 36-6351</p>
+  <p style="margin-top:6px">Agente certificada Disney &amp; Universal · Cotizaciones sin costo · Atención después de las 16hs</p>
+</footer>
+
+<script>
+(function(){
+  var cur=1, nAdu=2, nMen=0;
+  function g(id){return document.getElementById(id)}
+  function err(id,s){var el=g(id);if(el)el.style.display=s?'block':'none'}
+  function updatePbar(){g('pfill').style.width=Math.round(cur/5*100)+'%'}
+
+  function goTo(n){
+    if(n>cur&&!validate(cur))return;
+    g('s'+cur).classList.remove('on');
+    g('stp'+cur).classList.remove('on');
+    if(n>cur)g('stp'+cur).classList.add('done');
+    cur=n;
+    g('s'+cur).classList.add('on');
+    g('stp'+cur).classList.add('on');
+    updatePbar();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function checked(nm){var el=document.querySelector('input[name="'+nm+'"]:checked');return el?el.value:''}
+  function checkedAll(nm){var els=document.querySelectorAll('input[name="'+nm+'"]:checked');var r=[];for(var i=0;i<els.length;i++)r.push(els[i].value);return r}
+
+  function validate(s){
+    var ok=true;
+    if(s===1){
+      var d=document.querySelectorAll('input[name="dest"]:checked').length>0;
+      var m=g('sel-mes').value!=='';
+      var fl=checked('flex')!=='';
+      err('e-dest',!d);err('e-mes',!m);err('e-flex',!fl);
+      ok=d&&m&&fl;
+    }
+    if(s===2){
+      var gr=checked('grupo')!=='';var pr=checked('primera')!=='';
+      var pa=checked('pas')!=='';var vi=checked('visa')!=='';var ex=checked('experiencia')!=='';
+      err('e-grupo',!gr);err('e-primera',!pr);err('e-pas',!pa);err('e-visa',!vi);err('e-exp',!ex);
+      ok=gr&&pr&&pa&&vi&&ex;
+    }
+    if(s===3){
+      var hd=checked('hotel-dis')!=='';var hu=checked('hotel-uni')!=='';
+      var ch=checked('cat-hotel')!=='';var cr=checked('crucero')!=='';
+      err('e-hotel-dis',!hd);err('e-hotel-uni',!hu);err('e-cat-hotel',!ch);err('e-crucero',!cr);
+      ok=hd&&hu&&ch&&cr;
+    }
+    if(s===4){
+      var tr=checked('transporte')!=='';var co=checked('comida')!=='';var ia=checked('info-adicional')!=='';
+      err('e-transporte',!tr);err('e-comida',!co);err('e-infoadicional',!ia);
+      ok=tr&&co&&ia;
+    }
+    if(s===5){
+      var n=g('inp-nom').value.trim()!=='';var w=g('inp-wa').value.trim()!=='';var cm=checked('comunicacion')!=='';
+      err('e-nom',!n);err('e-wa',!w);err('e-comunicacion',!cm);
+      ok=n&&w&&cm;
+    }
+    return ok;
+  }
+
+  function buildEdades(){
+    var wrap=g('wrap-edades'),cont=g('cont-edades');
+    wrap.style.display=nMen>0?'block':'none';
+    cont.innerHTML='';
+    for(var i=1;i<=nMen;i++){
+      var row=document.createElement('div');row.className='erow';
+      var lbl=document.createElement('span');lbl.className='elbl';lbl.textContent='Menor '+i+':';
+      var inp=document.createElement('input');
+      inp.type='number';inp.min='0';inp.max='17';inp.placeholder='Edad';inp.id='edad'+i;
+      row.appendChild(lbl);row.appendChild(inp);cont.appendChild(row);
+    }
+  }
+
+  function enviar(){
+    if(!validate(5))return;
+    var nom=g('inp-nom').value.trim(), wa=g('inp-wa').value.trim();
+    var email=g('inp-email').value.trim(), pais=g('inp-pais').value;
+    var como=g('sel-como').value, com=g('inp-com').value.trim();
+    var dest=checkedAll('dest').join(', '), mes=g('sel-mes').value;
+    var dias=g('dias-total').value, presup=g('sel-presup').value;
+    var fIn=g('fecha-in').value, fOut=g('fecha-out').value;
+    var flex=checked('flex'), grupo=checked('grupo');
+    var primera=checked('primera'), exp=checked('experiencia');
+    var pas=checked('pas'), visa=checked('visa');
+    var hotelDis=checked('hotel-dis'), hotelUni=checked('hotel-uni');
+    var catHotel=checked('cat-hotel'), crucero=checked('crucero');
+    var actividades=checkedAll('actividades').join(', ')||'—';
+    var transporte=checked('transporte'), comida=checked('comida');
+    var extras=checkedAll('extras').join(', ')||'Ninguno';
+    var infoAdicional=checked('info-adicional'), comunicacion=checked('comunicacion');
+    var edArr=[];
+    for(var j=1;j<=nMen;j++){var ex=g('edad'+j);if(ex&&ex.value)edArr.push(ex.value+' años');}
+    var edStr=edArr.length?' | Edades: '+edArr.join(', '):'';
+
+    var t='✈️ *NUEVA CONSULTA — MM Destinos Mágicos*\n';
+    t+='━━━━━━━━━━━━━━━━━━━━━━\n\n';
+    t+='👤 *'+nom+'*\n';
+    t+='📱 '+wa+'\n';
+    if(email)t+='📧 '+email+'\n';
+    t+='🌍 '+pais+'\n';
+    if(como)t+='📲 Nos encontró por: '+como+'\n';
+    t+='\n*DESTINO*\n'+dest+'\n';
+    t+='Mes: '+mes+' · '+dias+'\n';
+    if(fIn)t+='Fechas: '+fIn+' → '+fOut+'\n';
+    t+='Flexibilidad: '+flex+'\n';
+    if(presup)t+='Presupuesto: '+presup+'\n';
+    t+='\n*VIAJEROS*\n'+nAdu+' adultos, '+nMen+' menores'+edStr+'\n';
+    t+=grupo+' · '+primera+' · Exp: '+exp+'\nPasaporte: '+pas+' · Visa: '+visa+'\n';
+    t+='\n*ALOJAMIENTO*\nDisney: '+hotelDis+'\nUniversal: '+hotelUni+'\nCategoría: '+catHotel+'\nCrucero: '+crucero+'\n';
+    t+='\n*PREFERENCIAS*\nActividades: '+actividades+'\nTransporte: '+transporte+'\nComida: '+comida+'\nExtras: '+extras+'\nInfo adicional: '+infoAdicional+'\nContacto pref.: '+comunicacion+'\n';
+    if(com)t+='\n💬 '+com+'\n';
+    t+='\n⏰ '+new Date().toLocaleString('es-AR',{timeZone:'America/Argentina/Buenos_Aires'});
+
+    g('wa-link').href='https://wa.me/5492235366351?text='+encodeURIComponent(t);
+
+    var pn=nom.split(' ')[0];
+    g('ok-nombre-sub').textContent='¡Gracias, '+pn+'! Ya estoy preparando tu cotización personalizada.';
+    var rhtml='';
+    rhtml+='<div class="or"><strong>Destino</strong>'+dest+'</div>';
+    rhtml+='<div class="or"><strong>Mes</strong>'+mes+(fIn?' ('+fIn+' – '+fOut+')':'')+'</div>';
+    rhtml+='<div class="or"><strong>Duración</strong>'+dias+'</div>';
+    rhtml+='<div class="or"><strong>Viajeros</strong>'+nAdu+' adulto'+(nAdu>1?'s':'')+(nMen>0?', '+nMen+' menor'+(nMen>1?'es':'')+edStr:'')+'</div>';
+    rhtml+='<div class="or"><strong>Hotel</strong>'+catHotel+'</div>';
+    if(extras!=='Ninguno')rhtml+='<div class="or"><strong>Extras</strong>'+extras+'</div>';
+    g('ok-resumen').innerHTML=rhtml;
+
+    for(var k=1;k<=5;k++)if(g('s'+k))g('s'+k).style.display='none';
+    g('steps-bar').style.display='none';
+    document.querySelector('.pbar').style.display='none';
+    g('ok-screen').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+    window.open(g('wa-link').href,'_blank');
+  }
+
+  g('b1').addEventListener('click',function(){goTo(2)});
+  g('b2b').addEventListener('click',function(){goTo(1)});
+  g('b2').addEventListener('click',function(){goTo(3)});
+  g('b3b').addEventListener('click',function(){goTo(2)});
+  g('b3').addEventListener('click',function(){goTo(4)});
+  g('b4b').addEventListener('click',function(){goTo(3)});
+  g('b4').addEventListener('click',function(){goTo(5)});
+  g('b5b').addEventListener('click',function(){goTo(4)});
+  g('benv').addEventListener('click',enviar);
+  g('adu-m').addEventListener('click',function(){nAdu=Math.max(1,nAdu-1);g('n-adu').textContent=nAdu});
+  g('adu-p').addEventListener('click',function(){nAdu++;g('n-adu').textContent=nAdu});
+  g('men-m').addEventListener('click',function(){nMen=Math.max(0,nMen-1);g('n-men').textContent=nMen;buildEdades()});
+  g('men-p').addEventListener('click',function(){nMen++;g('n-men').textContent=nMen;buildEdades()});
+})();
+</script>
+</body>
+</html>
